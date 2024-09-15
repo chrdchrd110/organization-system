@@ -1,10 +1,18 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter.messagebox import showinfo
-import time, json, mysql.connector
+import time, json, mysql.connector, os
 from PIL import Image, ImageTk
+from dotenv import load_dotenv
 
-mydb = mysql.connector.connect(host='127.0.0.1', user='root', password='password', database='9c')
+load_dotenv()
+hostname = os.getenv('HOSTNAME')
+username = os.getenv('USERNAME')
+password = os.getenv('PASSWORD')
+database = os.getenv('DATABASE')
+table = os.getenv('TABLE')
+
+mydb = mysql.connector.connect(host=hostname, user=username, password=password, database=database)
 if not mydb:
   exit()
 history = {}
@@ -16,7 +24,7 @@ def register():
   x,pw, cnfmpw, crntime = name.get(), password.get(), confirmPassword.get(), time.strftime('%D - %H:%M:%S', time.localtime())
   if x and len(pw) >5 and cnfmpw == pw:
     history[x] = crntime
-    sql = f"INSERT INTO student(name, password) value ('{x}', '{pw}');"
+    sql = f"INSERT INTO {table}(name, password) value ('{x}', '{pw}');"
     with mydb.cursor() as cursor:
       cursor.execute(sql)
       showinfo(title='registration status', message='user ' + x +  ' successfully registered')
