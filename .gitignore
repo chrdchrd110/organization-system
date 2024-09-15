@@ -7,4 +7,6 @@
 
 # Ignore specific file
 secret.txt
+registerlog.txt
 .env
+
