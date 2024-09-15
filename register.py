@@ -7,11 +7,16 @@ from dotenv import load_dotenv
 
 load_dotenv()
 hostname = os.getenv('HOSTNAME')
-username = os.getenv('USERNAME')
+username = os.getenv('USER')
 password = os.getenv('PASSWORD')
 database = os.getenv('DATABASE')
 table = os.getenv('TABLE')
 
+print(hostname)
+print(username)
+print(password)
+print(database)
+print(table)
 mydb = mysql.connector.connect(host=hostname, user=username, password=password, database=database)
 if not mydb:
   exit()
